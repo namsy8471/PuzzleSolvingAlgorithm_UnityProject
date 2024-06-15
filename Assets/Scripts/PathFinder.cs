@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class PathFinder : MonoBehaviour
 {
-    
+    private const int MAXSIZE = 20;
     public enum PathFinding
     {
         SearchWay,
@@ -44,6 +45,8 @@ public class PathFinder : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
+        
         Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
         
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerMask.GetMask("Node")))
@@ -232,7 +235,7 @@ public class PathFinder : MonoBehaviour
     {
         Width = int.Parse(newValue);
 
-        if (Width > 20) Width = 20;
+        if (Width > MAXSIZE) Width = MAXSIZE;
         
         UpdateNodes();
     }
@@ -240,32 +243,86 @@ public class PathFinder : MonoBehaviour
     {
         Height = int.Parse(newValue);
         
-        if (Height > 20) Height = 20;
+        if (Height > MAXSIZE) Height = MAXSIZE;
         
         UpdateNodes();
     }
     private void UpdateNodes()
     {
-        for (var width = 0; width < 20; width++)
+        for (var y = 0; y < MAXSIZE; y++)
         {
-            for (var height = 0; height < 20; height++)
+            for (var x = 0; x < MAXSIZE; x++)
             {
-                if (width < Width && height < Height)
-                {
-                    Nodes[height, width].gameObject.SetActive(true);
+                Nodes[y, x].PathType = (y % 2 == IsOdd(Width) || x % 2 == IsOdd(Height))
+                    ? Node.Type.Wall
+                    : Node.Type.Path;
 
-                    Nodes[height, width].PathType = width == 0 || height == 0 || width == Width - 1 || height == Height - 1
-                        ? Node.Type.Wall
-                        : Node.Type.Path;
+                if (y == 0 || y == Height - 1 || x == 0 || x == Width - 1)
+                    Nodes[y, x].PathType = Node.Type.Wall;
+
+                Nodes[y, x].gameObject.SetActive(y < Height && x < Width);
+            }
+        }
+        
+        // 랜덤으로 우측 혹은 아래로 길을 뚫는 작업
+        // Binary Tree algorithm 이중트리 알고리즘
+        var rand = new Random();
+
+        for (int y = 1; y < Width - 1; y++)
+        {
+            int count = 1;
+            for (int x = 1; x < Height - 1; x++)
+            {
+                if (x % 2 == IsOdd(Height) || y % 2 == IsOdd(Width)) continue;
+                if (y == Width - 2 && x == Height - 2) continue;
+
+                if (y == Width - 2)
+                {
+                    if (Nodes[y, x + 1] != null)
+                        Nodes[y, x + 1].PathType = Node.Type.Path;
+                    else
+                        Debug.LogError($"Node at position ({y}, {x + 1}) is not initialized.");
+                    continue;
                 }
 
+                if (x == Height - 2)
+                {
+                    if (Nodes[y + 1, x] != null)
+                        Nodes[y + 1, x].PathType = Node.Type.Path;
+                    else
+                        Debug.LogError($"Node at position ({y + 1}, {x}) is not initialized.");
+                    continue;
+                }
+
+                if (rand.Next(0, 2) == 0)
+                {
+                    if (Nodes[y, x + 1] != null)
+                        Nodes[y, x + 1].PathType = Node.Type.Path;
+                    else
+                        Debug.LogError($"Node at position ({y}, {x + 1}) is not initialized.");
+                    count++;
+                }
                 else
                 {
-                    Nodes[height, width].gameObject.SetActive(false);
+                    int randomIndex = rand.Next(0, count);
+                    if (Nodes[y + 1, x - randomIndex * 2] != null)
+                    {
+                        Nodes[y + 1, x - randomIndex * 2].PathType = Node.Type.Path;
+                        count = 1;
+                    }
+                    else
+                    {
+                        Debug.LogError($"Node at position ({y + 1}, {x - randomIndex * 2}) is not initialized.");
+                    }
                 }
             }
         }
 
         SetCameraCenter();
+    }
+
+    private int IsOdd(int i)
+    {
+        return i % 2 == 0 ? 1 : 0;
     }
 }

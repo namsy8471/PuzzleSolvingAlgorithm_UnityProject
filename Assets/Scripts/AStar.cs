@@ -81,7 +81,7 @@ public class AStar : Search
         if (neighbor.Visited || neighbor.PathType == Node.Type.Wall)
             return;
 
-        float gCost = currentNode.GCost + moveCost; // 노드 간 가중치를 1로 설정 (필요시 변경)
+        float gCost = currentNode.GCost + moveCost;
         float hCost = CalculateHeuristic(neighbor);
         
         if (neighbor.FCost < gCost + hCost) return;
@@ -108,7 +108,8 @@ public class AStar : Search
         
         Debug.Log($"Node[{node.X},{node.Y}]의 additional Cost = {additionalCost}");
 
-        return 1.2f * diagonal + additionalCost;
+        //return 1.2f * diagonal + additionalCost;
+        return 10 * (dy + dx);
         // 체비쇼프 거리 공식 mathf.Max(dx, dy)
         //return 10 * Mathf.Max(dx, dy);
     }
