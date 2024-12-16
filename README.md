@@ -11,6 +11,8 @@
 
 이하에 UML 다이어그램을 첨부합니다.
 
+// English
+
 Pathfinding Algorithm Implementation Project
 
 Development Motivation:
@@ -22,6 +24,8 @@ Features: Implemented variable reuse using the Factory Method Pattern
 
 
 The UML diagram is attached below.
+
+// 日本語
 
 経路探索アルゴリズム実装プロジェクト
 
