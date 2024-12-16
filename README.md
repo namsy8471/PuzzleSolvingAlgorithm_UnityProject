@@ -1,4 +1,4 @@
-# GameCapstoneDesign
+# Description
 
 길찾기 알고리즘 구현 프로젝트입니다.
 기간: 1개월 (2024.04~2024.05)
