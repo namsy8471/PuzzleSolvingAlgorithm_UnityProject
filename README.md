@@ -6,7 +6,9 @@
 
 개발인수: 1명
 
-기간: 1개월 (2024.04~2024.05)
+동작환경: Window 11
+
+기간: 1개월
 
 특징: 팩토리 메소드 패턴을 사용하여 변수 재활용
 
@@ -22,7 +24,9 @@ My goal is to implement pathfinding algorithms such as BFS, DFS, Dijkstra, and A
 
 Development Personnel: 1 Person
 
-Duration: 1 Month (April 2024 ~ May 2024)
+Operation Enviroment：Windows 11
+
+Duration: 1 Month
 
 Features: Implemented variable reuse using the Factory Method Pattern
 
@@ -38,7 +42,9 @@ BFS、DFS、ダイクストラ、A*のように理論として学んだだけで
 
 開発人数: 1名
 
-期間: 1ヶ月 (2024年4月～2024年5月)
+動作環境：Windows 11
+
+期間: 1ヶ月
 
 特徴: ファクトリメソッドパターンを使用し、変数の再利用を実現
 
