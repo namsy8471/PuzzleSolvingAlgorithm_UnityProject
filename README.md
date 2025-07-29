@@ -1,5 +1,14 @@
 # Description
 
+![BFS](https://github.com/user-attachments/assets/5dd23e23-9c49-4dd2-8329-e64e0b79eb42)
+*BFS Algorithm
+![DFS](https://github.com/user-attachments/assets/68333bc6-e639-41ee-9034-ddae970c410e)
+*DFS Algorithm
+![Dijkstra](https://github.com/user-attachments/assets/9ae448b5-338c-4d1a-bcae-6c5b44c8e92e)
+*Dijkstra Algorithm
+![AStar](https://github.com/user-attachments/assets/5ae9fa4b-50f8-4c3a-9885-e25122e86a30)
+*AStar Algorithm
+
 길찾기 알고리즘 구현 프로젝트입니다.
 
 개발 동기: BFS, DFS, Dijkstra, A*와 같이 이론으로 배우기만 하고 실제로 구현해보지 않았던 길찾기 알고리즘 구현이 목표입니다.
